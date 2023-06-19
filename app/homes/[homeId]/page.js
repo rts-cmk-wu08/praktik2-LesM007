@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import FsLightbox from "fslightbox-react";
 import { useState } from "react";
+import Lightbox from "@/app/components/Lightbox";
 
 const getHome = async (homeId) => {
   const result = await fetch(`https://dinmaegler.onrender.com/homes/${homeId}`);
@@ -15,14 +16,15 @@ const getHome = async (homeId) => {
 };
 
 const HomeDetail = async ({ params: { homeId } }) => {
-  const [toggler, setToggler] = useState(false);
+  //const [toggler, setToggler] = useState(false);
+
   const home = await getHome(homeId);
 
-  const imageurls = home.images.map((image) => image.url);
-  console.log(imageurls);
+  //const imageurls = home.images.map((image) => image.url);
+  //console.log(imageurls);
 
-  //const sources = home.images.map((image) => image.url);
-  //console.log(sources);
+  const sources = home.images.map((image) => image.url);
+  console.log(sources);
 
   const newFormatNum = new Intl.NumberFormat("da-DK", {
     style: "currency",
@@ -39,8 +41,7 @@ const HomeDetail = async ({ params: { homeId } }) => {
         width={1400}
         height={934}
       ></Image>
-      <button onClick={() => setToggler(!toggler)}>Toggle Lightbox</button>
-      <FsLightbox toggler={toggler} sources={[imageurls]} />
+      <Lightbox sources={sources} />
       <h1>
         {home.adress1}
         {home.postalcode}
